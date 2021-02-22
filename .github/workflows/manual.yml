@@ -1,0 +1,36 @@
+name: Manual workflow
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Validate PKGBUILD
+        id: validate-pkgbuild-neomutt
+        uses: 2m/arch-pkgbuild-builder@v1.16
+        with:
+          target: 'pkgbuild'
+          pkgname: 'neomutt'
+
+      - name: Validate SRCINFO
+        id: validate-srcinfo-neomutt
+        uses: 2m/arch-pkgbuild-builder@v1.16
+        with:
+          target: 'srcinfo'
+          pkgname: 'neomutt'
+
+      - name: Validate binary
+        id: validate-binary
+        uses: 2m/arch-pkgbuild-builder@v1.16
+        with:
+          target: 'run'
+          pkgname: 'neomutt'
+          command: 'neomutt -v'
