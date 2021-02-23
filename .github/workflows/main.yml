@@ -13,12 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Fetch Russon (Neomutt) GPG Signing Key
-        run: gpg  --keyserver keyserver.ubuntu.com --recv-keys 86C2397270DD7A561263CA4E5FAF0A6EE7371805
-
-      - name: Install basic build env
-        run: pacman -Syu --noconfirm --noprogressbar --needed base base-devel
-
       - name: Add build user
         run: useradd -m -G wheel builder
 
@@ -27,6 +21,12 @@ jobs:
 
       - name: Edit sudo
         run: 'echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel'
+
+      - name: Fetch Russon (Neomutt) GPG Signing Key
+        run: runuser -u builder -- gpg  --keyserver keyserver.ubuntu.com --recv-keys 86C2397270DD7A561263CA4E5FAF0A6EE7371805
+
+      - name: Install basic build env
+        run: pacman -Syu --noconfirm --noprogressbar --needed base base-devel
 
       - name: build neomutt
         run: cd neomutt && runuser -u builder -- makepkg -sf --noconfirm --noprogressbar
