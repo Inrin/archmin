@@ -25,8 +25,8 @@ jobs:
       - name: Grant builder permissions
         run: chown -R builder $PWD
 
-      - name: dump sudoers
-        run: cat /etc/sudoers
+      - name: Edit sudo
+        run: sed 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers
 
       - name: build neomutt
         run: cd neomutt && runuser -u builder -- makepkg -sf
