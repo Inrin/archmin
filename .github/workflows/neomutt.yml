@@ -1,4 +1,4 @@
-name: test
+name: Build & Run Neomutt
 on:
   workflow_dispatch:
 
@@ -10,11 +10,12 @@ jobs:
       options: --privileged
       volumes:
         - /sys/fs/cgroup:/sys/fs/cgroup
+
     steps:
       - uses: actions/checkout@v2
 
       - name: Install basic build env
-        run: pacman -Syu --noconfirm --noprogressbar --needed base base-devel namcap
+        run: pacman -Sqyu --noconfirm --noprogressbar --needed base base-devel namcap
 
       - name: Add build user
         run: useradd -m -G wheel builder
@@ -30,9 +31,6 @@ jobs:
 
       - name: build neomutt
         run: cd neomutt && runuser -u builder -- makepkg -sfi --noconfirm --noprogressbar
-
-      - name: namcap check
-        run: cd neomutt && runuser -u builder -- namcap -i *.tar.zst
 
       - name: Does it run?
         run: runuser -u builder -- neomutt -v
