@@ -16,5 +16,8 @@ jobs:
       - name: Fetch Russon (Neomutt) GPG Signing Key
         run: gpg --recv-keys 86C2397270DD7A561263CA4E5FAF0A6EE7371805
 
+      - name: "Install basic build env"
+        run: pacman -Syu --needed base-devel
+
       - name: Build neomutt
         run: makepkg -s
