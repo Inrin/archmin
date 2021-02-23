@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Fetch Russon (Neomutt) GPG Signing Key
-        run: gpg --recv-keys 86C2397270DD7A561263CA4E5FAF0A6EE7371805
+        run: gpg  --keyserver keyserver.ubuntu.com --recv-keys 86C2397270DD7A561263CA4E5FAF0A6EE7371805
 
       - name: "Install basic build env"
         run: pacman -Syu --needed base-devel
