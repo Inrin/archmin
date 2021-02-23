@@ -16,9 +16,5 @@ jobs:
       - name: Fetch Russon (Neomutt) GPG Signing Key
         run: gpg --recv-keys 86C2397270DD7A561263CA4E5FAF0A6EE7371805
 
-      - name: Build Arch Linux package
-        uses: FFY00/build-arch-package@master
-        with:
-          PKGBUILD: $GITHUB_WORKSPACE/neomutt/PKGBUILD
-          OUTDIR: $HOME/arch-packages
-
+      - name: Build neomutt
+        run: makepkg -s
