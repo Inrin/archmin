@@ -43,9 +43,9 @@ build() {
   make \
     "${_make_paths[@]}" \
     "${_make_options[@]}" \
-    all man
+    all
 
-  make -C contrib/subtree "${_make_paths[@]}" all man
+  make -C contrib/subtree "${_make_paths[@]}" all
   make -C contrib/diff-highlight "${_make_paths[@]}"
 }
 
@@ -76,13 +76,13 @@ package() {
     "${_make_paths[@]}" \
     "${_make_options[@]}" \
     DESTDIR="$pkgdir" \
-    install install-man
+    install
 
   # fancy git prompt
   mkdir -p "$pkgdir"/usr/share/git/
   install -m 0644 ./contrib/completion/git-prompt.sh "$pkgdir"/usr/share/git/git-prompt.sh
   # subtree installation
-  make -C contrib/subtree "${_make_paths[@]}" DESTDIR="$pkgdir" install install-man
+  make -C contrib/subtree "${_make_paths[@]}" DESTDIR="$pkgdir" install
   # the rest of the contrib stuff
   find contrib/ -name '.gitignore' -delete
   cp -a ./contrib/* "$pkgdir"/usr/share/git/
