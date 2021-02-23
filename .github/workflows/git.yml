@@ -30,7 +30,7 @@ jobs:
         run: 'echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel'
 
       - name: Fetch Junio C Hamano GPG Signing Key
-        run: runuser -u builder -- gpg  --keyserver keyserver.ubuntu.com --recv-keys 96E07AF25771955980DAD10020D04E5A713660A7
+        run: runuser -u builder -- gpg --keyserver keyserver.ubuntu.com --recv-keys 96E07AF25771955980DAD10020D04E5A713660A7
 
       - name: build git
         run: cd git && runuser -u builder -- makepkg -sfi --noconfirm --noprogressbar
