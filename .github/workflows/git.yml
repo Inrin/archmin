@@ -17,6 +17,9 @@ jobs:
       - name: Install basic build env
         run: pacman -Sqyu --noconfirm --noprogressbar --needed base base-devel namcap
 
+      - name: Extra deps needed?
+        run: pacman -Sqyu --noconfirm --noprogressbar --needed perl perl-error perl-mailtools curl expat openssl pcre2 grep python libgnome-keyring xmlto asciidoc
+
       - name: Add build user
         run: useradd -m -G wheel builder
 
