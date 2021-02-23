@@ -22,5 +22,11 @@ jobs:
       - name: Add build user
         run: useradd -m builder
 
+      - name: Grant builder permissions
+        run: chown -R builder $PWD
+
       - name: Build neomutt
-        run: runuser -u builder -- makepkg -s
+        run: runuser -u builder -- makepkg -sf
+
+      - name: Check with namcap
+        run: namcap -i *.tar.zst
