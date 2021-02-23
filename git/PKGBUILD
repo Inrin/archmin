@@ -11,7 +11,7 @@ url='https://git-scm.com/'
 license=('GPL2')
 depends=('curl' 'expat'
          'openssl' 'grep' 'shadow')
-makedepends=('xmlto' 'asciidoc')
+makedepends=('perl' 'perl-error' 'xmlto' 'asciidoc')
 optdepends=()
 install=git.install
 validpgpkeys=('96E07AF25771955980DAD10020D04E5A713660A7') # Junio C Hamano
@@ -21,6 +21,7 @@ sha256sums=('f988a8a095089978dab2932af4edb22b4d7d67d67b81aaa1986fa29ef45d9467' '
 _make_paths=(
   prefix='/usr'
   gitexecdir='/usr/lib/git-core'
+  perllibdir="$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')"
 )
 
 _make_options=(
@@ -30,7 +31,6 @@ _make_options=(
   MAN_BOLD_LITERAL=1
   NO_PERL_CPAN_FALLBACKS=1
   USE_LIBPCRE2=0
-  NO_GETTEXT=1
   NO_PERL=1
   NO_PERL_CPAN_FALLBACKS=1
   NO_PYTHON=1
@@ -45,7 +45,7 @@ build() {
     "${_make_options[@]}" \
     all
 
-  make -C contrib/subtree "${_make_paths[@]}" all
+  make -C contrib/subtree "${_make_paths[@]}" all man
   make -C contrib/diff-highlight "${_make_paths[@]}"
 }
 
@@ -76,13 +76,10 @@ package() {
     "${_make_paths[@]}" \
     "${_make_options[@]}" \
     DESTDIR="$pkgdir" \
-    install
+    install install-man
 
-  # fancy git prompt
-  mkdir -p "$pkgdir"/usr/share/git/
-  install -m 0644 ./contrib/completion/git-prompt.sh "$pkgdir"/usr/share/git/git-prompt.sh
   # subtree installation
-  make -C contrib/subtree "${_make_paths[@]}" DESTDIR="$pkgdir" install
+  make -C contrib/subtree "${_make_paths[@]}" DESTDIR="$pkgdir" install install-man
   # the rest of the contrib stuff
   find contrib/ -name '.gitignore' -delete
   cp -a ./contrib/* "$pkgdir"/usr/share/git/
