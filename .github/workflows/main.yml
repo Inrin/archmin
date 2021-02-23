@@ -20,10 +20,13 @@ jobs:
         run: pacman -Syu --noconfirm --noprogressbar --needed base base-devel
 
       - name: Add build user
-        run: useradd -m builder
+        run: useradd -m -G wheel builder
 
       - name: Grant builder permissions
         run: chown -R builder $PWD
+
+      - name: dump sudoers
+        run: cat /etc/sudoers
 
       - name: build neomutt
         run: cd neomutt && runuser -u builder -- makepkg -sf
