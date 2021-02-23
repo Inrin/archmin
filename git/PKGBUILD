@@ -21,6 +21,7 @@ sha256sums=('f988a8a095089978dab2932af4edb22b4d7d67d67b81aaa1986fa29ef45d9467' '
 _make_paths=(
   prefix='/usr'
   gitexecdir='/usr/lib/git-core'
+    perllibdir="$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')"
 )
 
 _make_options=(
@@ -70,7 +71,7 @@ check() {
 
 package() {
   cd "$srcdir/$pkgname-$pkgver"
-  
+
   make \
     "${_make_paths[@]}" \
     "${_make_options[@]}" \
