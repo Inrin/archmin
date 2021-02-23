@@ -29,8 +29,13 @@ jobs:
       - name: Fetch Junio C Hamano GPG Signing Key
         run: runuser -u builder -- gpg --keyserver keyserver.ubuntu.com --recv-keys 96E07AF25771955980DAD10020D04E5A713660A7
 
+      - name: Path
+        run: |
+          echo $PATH
+          runuser -u builder -- echo $PATH
+
       - name: build git
-        run: 'cd git && runuser -u builder -- PATH="/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl" makepkg -sfi --noconfirm --noprogressbar'
+        run: cd git && runuser -w PATH -u builder --  makepkg -sfi --noconfirm --noprogressbar
 
       - name: Does it run?
         run: runuser -u builder -- git --version
