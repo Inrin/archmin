@@ -1,6 +1,5 @@
 name: Build & Run Neomutt
-on:
-  workflow_dispatch:
+on: push
 
 jobs:
   test-run:
