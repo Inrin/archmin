@@ -29,7 +29,7 @@ jobs:
         run: 'echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel'
 
       - name: build neomutt
-        run: cd neomutt && runuser -u builder -- makepkg -sf
+        run: cd neomutt && runuser -u builder -- makepkg -sf --noconfirm --noprogressbar
 
       - name: namcap check
         run: cd neomutt && runuser -u builder -- namcap -i *.tar.zst
