@@ -25,5 +25,8 @@ jobs:
       - name: Grant builder permissions
         run: chown -R builder $PWD
 
-      - name: builder tree
-        run: pacman -S tree --noconfirm --noprogressbar && cd neomutt && tree
+      - name: build neomutt
+        run: cd neomutt && runuser -u builder -- makepkg -sf
+
+      - name: namcap check
+        run: cd neomutt && runuser -u builder -- namcap -i *.tar.zst
