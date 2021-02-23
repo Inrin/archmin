@@ -17,7 +17,7 @@ jobs:
         run: gpg  --keyserver keyserver.ubuntu.com --recv-keys 86C2397270DD7A561263CA4E5FAF0A6EE7371805
 
       - name: Install basic build env
-        run: pacman -Syu --noconfirm --noprogressbar --needed base-devel
+        run: pacman -Syu --noconfirm --noprogressbar --needed base base-devel
 
       - name: Add build user
         run: useradd -m builder
@@ -26,4 +26,4 @@ jobs:
         run: chown -R builder $PWD
 
       - name: builder tree
-        run: pacman -S tree --noconfirm --noprogressbar && tree
+        run: pacman -S tree --noconfirm --noprogressbar && cd neomutt && tree
