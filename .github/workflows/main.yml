@@ -23,7 +23,7 @@ jobs:
         run: useradd -m builder
 
       - name: Grant builder permissions
-        run: chown -R builder $PWD
+        run: chown -R builder $PWD && cd neomutt
 
       - name: Build neomutt
         run: runuser -u builder -- makepkg -sf
