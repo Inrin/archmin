@@ -26,7 +26,7 @@ jobs:
         run: chown -R builder $PWD
 
       - name: Edit sudo
-        run: echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
+        run: 'echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel'
 
       - name: build neomutt
         run: cd neomutt && runuser -u builder -- makepkg -sf
